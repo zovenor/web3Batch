@@ -18,8 +18,6 @@ class Web3Batch:
     endpoint_uri: RPCEndpoint
     payloads: List[Payload]
 
-    __slots__ = ('endpoint_uri', 'payloads')
-
     def __init__(self, endpoint_uri: RPCEndpoint) -> None:
         self.endpoint_uri = endpoint_uri
         self.payloads = []
