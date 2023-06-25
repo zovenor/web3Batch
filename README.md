@@ -1,5 +1,9 @@
 # web3Batch.py
 
+```commandline
+pip install web3Batch
+```
+
 ```python
 from web3 import Web3
 from web3Batch import We3Batch
