@@ -8,7 +8,7 @@ pip install web3Batch
 
 ```python
 from web3 import Web3
-from web3Batch import We3Batch
+from web3Batch import web3Batch
 
 contract_addresses = ['0x...', '0x...', ...]
 endpoint_uri = 'https://localhost:6000'
@@ -22,13 +22,13 @@ contracts = [web3.eth.contract(
     address=web3.to_checksum_address(contract_address)
 ) for contract_address in contract_addresses]
 
-wb = Web3Batch(endpoint_uri)
+wb = web3Batch.Web3Batch(endpoint_uri)
 
 for contract in contracts:
     wb.add_contract_request(
         contract=contract,
         fn_name='balanceOf',
-        args=(web3.to_checksum_address(contract.address))
+        args=(web3.to_checksum_address(contract.address),)
     )
 
 responses = wb.send_requests()

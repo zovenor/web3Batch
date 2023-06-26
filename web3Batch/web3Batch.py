@@ -3,22 +3,23 @@ from typing import (
     Tuple,
     Any,
     Dict,
-    Optional
+    Optional,
+    Union
 )
 
 import httpx
 import aiohttp
-from web3.types import RPCEndpoint
+from eth_typing import URI
 from web3.contract import Contract
 
 from .types import Payload
 
 
 class Web3Batch:
-    endpoint_uri: RPCEndpoint
+    endpoint_uri: Optional[Union[URI, str]]
     payloads: List[Payload]
 
-    def __init__(self, endpoint_uri: RPCEndpoint) -> None:
+    def __init__(self, endpoint_uri: Optional[Union[URI, str]]) -> None:
         self.endpoint_uri = endpoint_uri
         self.payloads = []
 
@@ -28,7 +29,7 @@ class Web3Batch:
             contract: Contract,
             fn_name: str,
             args: Optional[Tuple[Any]] = None,
-            kwargs: Optional[Dict[Any]] = None) -> Payload:
+            kwargs: Optional[Dict[str, Any]] = None) -> Payload:
         _data = contract.encodeABI(fn_name=fn_name, args=args, kwargs=kwargs)
         payload = Payload(
             {
@@ -50,7 +51,7 @@ class Web3Batch:
             contract: Contract,
             fn_name: str,
             args: Optional[Tuple[Any]] = None,
-            kwargs: Optional[Dict[Any]] = None
+            kwargs: Optional[Dict[str, Any]] = None
     ) -> None:
         _id = len(self.payloads) + 1
         payload = self._get_payload_with_contract(
